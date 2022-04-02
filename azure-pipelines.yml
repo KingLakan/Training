@@ -9,6 +9,6 @@ trigger:
 pool: OwnPool
 
 steps:
-- script: echo Hello, world!
+- script: echo $(System.DefaultWorkingDirectory)
   displayName: '$(System.DefaultWorkingDirectory)'
 
