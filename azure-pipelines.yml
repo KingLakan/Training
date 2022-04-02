@@ -10,9 +10,5 @@ pool: OwnPool
 
 steps:
 - script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  displayName: '$(System.DefaultWorkingDirectory)'
 
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: '$(System.DefaultWorkingDirectory)/src/Append.py'
