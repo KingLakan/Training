@@ -23,21 +23,20 @@ steps:
 
 #  - script: python src/Append.py
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'tar'
-    tarCompression: 'gz'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.BinariesDirectory)'
+      includeRootFolder: true
+      archiveType: 'tar'
+      tarCompression: 'gz'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        echo Write your commands here
+        
+        echo $(pwd)
 
   - script: echo "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)"
-
-- task: CmdLine@2
-  inputs:
-    script: |
-      echo Write your commands here
-      
-      echo $(pwd)
-
