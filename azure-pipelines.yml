@@ -50,11 +50,8 @@ steps:
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
 
-  - task: UniversalPackages@0
+  - task: PublishBuildArtifacts@1
     inputs:
-      command: 'publish'
-      publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      feedsToUsePublish: 'internal'
-      vstsFeedPublish: 'Davidpbsamuelsson/Training'
-      vstsFeedPackagePublish: 'apa'
-      versionOption: 'minor'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
