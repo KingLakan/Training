@@ -1,3 +1,5 @@
-with open("../dummy.txt", 'wa') as file_object:
+with open("../dummy.txt", 'w') as file_object:
     file_object.write("hello\n")
-print("Written")
+with open("../dummy.txt", 'a') as file_object:
+    file_object.write("hello\n")
+print("append")
