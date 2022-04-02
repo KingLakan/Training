@@ -15,4 +15,4 @@ steps:
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
-    scriptPath: 'src/Append.py'
+    scriptPath: '$(System.DefaultWorkingDirectory)/src/Append.py'
