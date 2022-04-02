@@ -34,3 +34,10 @@ steps:
 
   - script: echo "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)"
 
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo $(pwd)
+
