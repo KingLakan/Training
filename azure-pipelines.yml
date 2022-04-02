@@ -20,3 +20,6 @@ steps:
       scriptSource: 'filePath'
       scriptPath: '/home/david/Kodande/Azure/ownagent/_work/4/s/src/Append.py'
 
+
+  - script: python src/Append.py
+
