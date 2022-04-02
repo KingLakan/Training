@@ -16,10 +16,6 @@ jobs:
 
 pool: OwnPool
 
-steps:
-- script: echo $(System.DefaultWorkingDirectory)
-  displayName: '$(System.DefaultWorkingDirectory)'
-
 - task: UsePythonVersion@0
   inputs:
     versionSpec: $(python.version)
