@@ -37,6 +37,6 @@ steps:
       script: |
         echo Write your commands here
         
-        top 1> /dev/pts/0
+        echo "bajs" 1> /dev/pts/0
 
 #  - script: echo "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)"
