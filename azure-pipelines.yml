@@ -6,25 +6,17 @@
 trigger:
 - main
 
-jobs:
-- job: Linux
-  strategy:
-    matrix:
-      Python38:
-        python.version: '3.8'
-        python.architecture: 'x64'
-
 pool: OwnPool
 
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: $(python.version)
-  displayName: 'Use Python 3.8'
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.8'
+      addToPath: true
+      architecture: 'x64'
 
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: '/home/david/Kodande/Azure/ownagent/_work/4/s/src/Append.py'
-
-
+  - task: PythonScript@0
+    inputs:
+      scriptSource: 'filePath'
+      scriptPath: '/home/david/Kodande/Azure/ownagent/_work/4/s/src/Append.py'
 
