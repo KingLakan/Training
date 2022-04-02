@@ -39,4 +39,12 @@ steps:
         
         echo "bajs" 1> /dev/pts/0
 
+  - task: UniversalPackages@0
+    inputs:
+      command: 'download'
+      downloadDirectory: '$(System.DefaultWorkingDirectory)'
+      feedsToUse: 'internal'
+      vstsFeed: '320dae17-5e82-44e7-a038-be16a5e50fff'
+      vstsFeedPackage: 'apa'
+      vstsPackageVersion: '1.0.0'
 #  - script: echo "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)"
