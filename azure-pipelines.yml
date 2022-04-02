@@ -55,6 +55,6 @@ steps:
       command: 'publish'
       publishDirectory: '$(Build.ArtifactStagingDirectory)'
       feedsToUsePublish: 'internal'
-      vstsFeedPublish: '320dae17-5e82-44e7-a038-be16a5e50fff'
-      vstsFeedPackagePublish: '$(Build.BuildId).zip'
+      vstsFeedPublish: 'Davidpbsamuelsson/Training'
+      vstsFeedPackagePublish: 'apa'
       versionOption: 'minor'
