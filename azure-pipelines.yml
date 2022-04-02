@@ -49,3 +49,12 @@ steps:
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
+
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: '320dae17-5e82-44e7-a038-be16a5e50fff'
+    vstsFeedPackagePublish: 'apa'
+    versionOption: 'minor'
