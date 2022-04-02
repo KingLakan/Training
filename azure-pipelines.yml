@@ -37,6 +37,6 @@ steps:
       script: |
         echo Write your commands here
         
-        echo $(pwd)
+        top
 
-  - script: echo "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)"
+#  - script: echo "$(Build.ArtifactStagingDirectory)/$(Build.BuildId)"
