@@ -21,6 +21,7 @@ steps:
       scriptPath: '/home/david/Kodande/Azure/ownagent/_work/4/s/src/Append.py'
 
 
+
 #  - script: python src/Append.py
 
   - task: ArchiveFiles@2
@@ -55,3 +56,9 @@ steps:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'drop'
       publishLocation: 'Container'
+
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: '/srs/Append.py'
+    arguments: '$(Build.ArtifactStagingDirectory)'
