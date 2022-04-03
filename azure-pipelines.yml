@@ -57,9 +57,10 @@ steps:
       ArtifactName: 'drop'
       publishLocation: 'Container'
 
-  - task: PythonScript@0
-    inputs:
-      scriptSource: 'filePath'
-      scriptPath: './src/Append.py'
-      arguments: '$(Build.ArtifactStagingDirectory)/mydummy.txt'
+#  - task: PythonScript@0
+#    inputs:
+#      scriptSource: 'filePath'
+#      scriptPath: './src/Append.py'
+#      arguments: '$(Build.ArtifactStagingDirectory)/mydummy.txt'
       #$(Build.Repository.LocalPath)
+  - script: python3 ./src/Append "$(Build.ArtifactStagingDirectory)/mydummy.txt"
