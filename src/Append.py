@@ -1,4 +1,5 @@
 import argparse
+from os.path import exists
 
 parser = argparse.ArgumentParser(description='SysDef to be processed')
 parser.add_argument('--file',
@@ -6,10 +7,13 @@ parser.add_argument('--file',
                     type=str,
                     action='store',
                     help='Path+name of file to append to')
-
 args = parser.parse_args()
-print(args, "\n")
-print("inputted file: {}".format(args.file))
 
-with open(args.file, 'a') as file_object:
-    file_object.write("hello\n")
+print("inputted file: {}".format(args.file), "\n")
+
+if exists(args.file):
+    with open(args.file, 'a') as file_object:
+        file_object.write("hello\n")
+else:
+    with open(args.file, 'w') as file_object:
+        file_object.write("hello\n")
