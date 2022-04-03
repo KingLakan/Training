@@ -15,10 +15,10 @@ steps:
       addToPath: true
       architecture: 'x64'
 
-  - task: PythonScript@0
-    inputs:
-      scriptSource: 'filePath'
-      scriptPath: '/home/david/Kodande/Azure/ownagent/_work/4/s/src/Append.py'
+#  - task: PythonScript@0
+#    inputs:
+#      scriptSource: 'filePath'
+#      scriptPath: '/home/david/Kodande/Azure/ownagent/_work/4/s/src/Append.py'
 
 
 
