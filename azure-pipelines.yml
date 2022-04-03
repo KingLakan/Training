@@ -60,5 +60,6 @@ steps:
   - task: PythonScript@0
     inputs:
       scriptSource: 'filePath'
-      scriptPath: '$(Build.Repository.LocalPath)/srs/Append.py'
+      scriptPath: '/src/Append.py'
       arguments: '$(Build.ArtifactStagingDirectory)'
+      #$(Build.Repository.LocalPath)
