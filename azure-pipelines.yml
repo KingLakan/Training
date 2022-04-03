@@ -63,4 +63,4 @@ steps:
 #      scriptPath: './src/Append.py'
 #      arguments: '$(Build.ArtifactStagingDirectory)/mydummy.txt'
       #$(Build.Repository.LocalPath)
-  - script: python3 ./src/Append.py "--file $(Build.ArtifactStagingDirectory)/mydummy.txt"
+  - script: python3 ./src/Append.py --file "$(Build.ArtifactStagingDirectory)/mydummy.txt"
