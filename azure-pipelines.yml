@@ -6,14 +6,21 @@
 trigger:
 - main
 
-pool: OwnPool
+pool: Windows_Pool
 
 steps:
+  - script: echo "$(Build.ArtifactStagingDirectory)"
   - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.8'
       addToPath: true
       architecture: 'x64'
+
+#  - task: UsePythonVersion@0
+#    inputs:
+#      versionSpec: '3.8'
+#      addToPath: true
+#      architecture: 'x64'
 
 #  - task: PythonScript@0
 #    inputs:
@@ -24,32 +31,32 @@ steps:
 
 #  - script: python src/Append.py
 
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.BinariesDirectory)'
-      includeRootFolder: true
-      archiveType: 'tar'
-      tarCompression: 'gz'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
+##  - task: ArchiveFiles@2
+##    inputs:
+##      rootFolderOrFile: '$(Build.BinariesDirectory)'
+##      includeRootFolder: true
+##      archiveType: 'tar'
+##      tarCompression: 'gz'
+##      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+##      replaceExistingArchive: true
 
-  - task: CmdLine@2
-    inputs:
-      script: |
-        echo Write your commands here
-        
-        echo "bajs" 1> /dev/pts/0
+##  - task: CmdLine@2
+##    inputs:
+##      script: |
+##        echo Write your commands here
+##        
+##        echo "bajs" 1> /dev/pts/0
 
 
-  - script: echo "$(Build.ArtifactStagingDirectory)"
+##  - script: echo "$(Build.ArtifactStagingDirectory)"
 
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.BinariesDirectory)'
-      includeRootFolder: true
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
+##  - task: ArchiveFiles@2
+##    inputs:
+##      rootFolderOrFile: '$(Build.BinariesDirectory)'
+##      includeRootFolder: true
+##      archiveType: 'zip'
+##      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+##      replaceExistingArchive: true
 
 #  - task: PublishBuildArtifacts@1
 #    inputs:
@@ -63,4 +70,4 @@ steps:
 #      scriptPath: './src/Append.py'
 #      arguments: '$(Build.ArtifactStagingDirectory)/mydummy.txt'
       #$(Build.Repository.LocalPath)
-  - script: python3 ./src/Append.py --file "$(Build.ArtifactStagingDirectory)/mydummy.txt"
+##  - script: python3 ./src/Append.py --file "$(Build.ArtifactStagingDirectory)/mydummy.txt"
