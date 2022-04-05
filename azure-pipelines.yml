@@ -28,7 +28,7 @@ steps:
     inputs:
       SourceFolder: '$(Build.Repository.LocalPath)\veristand'
       Contents: '**'
-      TargetFolder: 'C:\Users\dsamuels\Documents\BuildFolder'
+      TargetFolder: 'Build.BinariesDirectory'
 
 #  - task: UsePythonVersion@0
 #    inputs:
