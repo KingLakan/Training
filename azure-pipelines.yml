@@ -10,7 +10,8 @@ pool: Windows_Pool
 
 steps:
   - script: echo "$(Build.Repository.LocalPath)"
-  - script: python3 ./src/Append.py --file "$(Build.Repository.LocalPath)/src/$(systemDefinitionFile)"
+  - script: echo "$(Agent.ToolsDirectory)"
+#  - script: python3 ./src/Append.py --file "$(Build.Repository.LocalPath)/src/$(systemDefinitionFile)"
 
 #  - task: UsePythonVersion@0
 #    inputs:
