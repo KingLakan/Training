@@ -15,11 +15,12 @@ pool: Windows_Pool
 steps:
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
+  - script: echo "$(Agent.ToolsDirectory)"
   - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\$(systemDefinitionFile)"
 
   - task: CopyFiles@2
     inputs:
-      SourceFolder: '$(Build.Repository.LocalPath)\$(systemDefinitionFile)'
+      SourceFolder: '$(Build.Repository.LocalPath)\veristand'
       Contents: '**'
       TargetFolder: 'C:\Users\dsamuels\Documents\BuildFolder'
 
