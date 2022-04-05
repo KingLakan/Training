@@ -10,7 +10,7 @@ pool: Windows_Pool
 
 steps:
   - script: echo "$(Build.Repository.LocalPath)"
-#  - script: python3 ./src/Append.py --file "$(Build.ArtifactStagingDirectory)/mydummy.txt"
+  - script: python3 ./src/Append.py --file "$(Build.Repository.LocalPath)/src/$(systemDefinitionFile)"
 
 #  - task: UsePythonVersion@0
 #    inputs:
