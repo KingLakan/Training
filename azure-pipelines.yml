@@ -11,7 +11,7 @@ pool: Windows_Pool
 steps:
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
-  - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\src\$(systemDefinitionFile)"
+  - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\veristand\$(systemDefinitionFile)"
 
 #  - task: UsePythonVersion@0
 #    inputs:
