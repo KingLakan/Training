@@ -9,12 +9,8 @@ trigger:
 pool: Windows_Pool
 
 steps:
-  - script: echo "$(Build.ArtifactStagingDirectory)"
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.8'
-      addToPath: true
-      architecture: 'x64'
+  - script: echo "$(Build.Repository.LocalPath)"
+#  - script: python3 ./src/Append.py --file "$(Build.ArtifactStagingDirectory)/mydummy.txt"
 
 #  - task: UsePythonVersion@0
 #    inputs:
