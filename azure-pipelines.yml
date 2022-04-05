@@ -13,12 +13,18 @@ trigger:
 pool: Windows_Pool
 
 steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\$(systemDefinitionFile)"
 
   - task: CopyFiles@2
+    displayName: 'Copy Created System Definition File'
     inputs:
       SourceFolder: '$(Build.Repository.LocalPath)\veristand'
       Contents: '**'
