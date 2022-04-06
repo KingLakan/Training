@@ -21,13 +21,6 @@ steps:
       versionSpec: '3.x'
       addToPath: true
 
-  - script: echo "Starting veristand to be able to use save system definition method in the API"
-  - task: BatchScript@1
-    inputs:
-      filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
-      arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\$(projectName)\$(projectName).nivsprj"'
-      failOnStandardError: false
-
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: echo "$(Agent.ToolsDirectory)"
