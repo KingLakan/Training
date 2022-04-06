@@ -5,7 +5,7 @@
 
 variables:
   - name: systemDefinitionFile
-    value: veristand\Engine Demo.nivssdf
+    value: veristand\Default Project.nivssdf
 
   - name: veristandPath
     value: 
@@ -38,7 +38,7 @@ steps:
     inputs:
       filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
       arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 4\Engine Demo 4.nivsprj" -sysDef "C:\Users\dsamuels\Documents\BuildFolder\Engine Demo.nivssdf" -deploy'
-      failOnStandardError: true
+      failOnStandardError: false
 
 #  - task: UsePythonVersion@0
 #    inputs:
