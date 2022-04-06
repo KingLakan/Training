@@ -24,7 +24,7 @@ steps:
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: echo "$(Agent.ToolsDirectory)"
-  - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\$(projectName).nivsprj"
+  - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\veristand\$(projectName).nivsprj"
   - task: CopyFiles@2
     displayName: 'Copy Created System Definition File'
     inputs:
