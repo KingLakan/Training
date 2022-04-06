@@ -37,7 +37,7 @@ steps:
   - task: BatchScript@1
     inputs:
       filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
-      arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 4\Engine Demo 4.nivsprj" -sysDef "C:\Users\dsamuels\Documents\BuildFolder\Engine Demo.nivssdf" -depploy'
+      arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 4\Engine Demo 4.nivsprj" -sysDef "C:\Users\dsamuels\Documents\BuildFolder\Engine Demo.nivssdf" -deploy'
       failOnStandardError: true
 
 #  - task: UsePythonVersion@0
