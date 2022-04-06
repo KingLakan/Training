@@ -21,10 +21,16 @@ steps:
       versionSpec: '3.x'
       addToPath: true
 
+  - task: BatchScript@1
+    inputs:
+      filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
+      arguments: '-openProject "$(Build.BinariesDirectory)\$(projectName).nivsprj"' # create default project
+      failOnStandardError: false
+
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: echo "$(Agent.ToolsDirectory)"
-  - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\$(systemDefinitionFile)"
+  - script: py.exe ./src/Append.py --file "$(Build.BinariesDirectory)\$(projectName).nivsprj"
   - task: CopyFiles@2
     displayName: 'Copy Created System Definition File'
     inputs:
@@ -36,7 +42,7 @@ steps:
   - task: BatchScript@1
     inputs:
       filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
-      arguments: '-openProject "$(Build.BinariesDirectory)\$(projectName).nivsprj" -sysDef "$(Build.Repository.LocalPath)\$(systemDefinitionFile)" -deploy'
+      arguments: '-openProject "$(Build.BinariesDirectory)\$(projectName).nivsprj" -sysDef "$(Build.BinariesDirectory)\$(projectName).nivssdf" -deploy'
       failOnStandardError: false
 
 #  - task: UsePythonVersion@0
