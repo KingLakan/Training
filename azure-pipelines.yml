@@ -36,7 +36,7 @@ steps:
   - task: BatchScript@1
     inputs:
       filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
-      arguments: '-openProject "$(Build.Repository.LocalPath)\$(projectName).nivsprj" -sysDef "$(Build.Repository.LocalPath)\$(projectName).nivssdf" -deploy'
+      arguments: '-openProject "$(Build.BinariesDirectory)\veristandProject\$(projectName).nivsprj" -sysDef "$$(Build.BinariesDirectory)\$(projectName).nivssdf" -deploy'
       failOnStandardError: false
 
 #  - task: UsePythonVersion@0
