@@ -5,7 +5,7 @@
 
 variables:
   - name: systemDefinitionFile
-    value: veristand\Default Project.nivssdf
+    value: veristand\Default Project 7.nivssdf
 
   - name: veristandPath
     value: 
@@ -37,7 +37,7 @@ steps:
   - task: BatchScript@1
     inputs:
       filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
-      arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Default Project 7\Default Project.nivsprj" -sysDef "$(Build.BinariesDirectory)\Default Project.nivssdf" -deploy'
+      arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Default Project 7\Default Project 7.nivsprj" -sysDef "$(Build.BinariesDirectory)\Default Project.nivssdf" -deploy'
       failOnStandardError: false
 
 #  - task: UsePythonVersion@0
