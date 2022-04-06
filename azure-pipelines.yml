@@ -21,6 +21,13 @@ steps:
       versionSpec: '3.x'
       addToPath: true
 
+  - script: echo "Starting veristand to be able to save system definition file?"
+  - task: BatchScript@1
+    inputs:
+      filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
+      arguments: 
+      failOnStandardError: false
+
   - script: echo "$(Build.Repository.LocalPath)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: echo "$(Agent.ToolsDirectory)"
