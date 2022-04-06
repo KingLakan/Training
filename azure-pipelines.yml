@@ -38,7 +38,7 @@ steps:
     inputs:
       SourceFolder: '$(Build.Repository.LocalPath)\veristand'
       Contents: '**'
-      TargetFolder: 'Build.BinariesDirectory'
+      TargetFolder: '$(Build.BinariesDirectory)'
 
   - script:  echo 'Start and deploy Veristand project'
   - task: BatchScript@1
