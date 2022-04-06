@@ -32,9 +32,6 @@ steps:
   - script: echo "$(Agent.ToolsDirectory)"
   - script: echo "$(Agent.ToolsDirectory)"
   - script: py.exe ./src/Append.py --file "$(Build.Repository.LocalPath)\$(systemDefinitionFile)"
-  - task: Delay@1
-    inputs:
-      delayForMinutes: '0.25'
   - task: CopyFiles@2
     displayName: 'Copy Created System Definition File'
     inputs:
