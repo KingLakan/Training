@@ -17,7 +17,7 @@ jobs:
 
     - script: |
         echo Add other tasks to build, test, and deploy your project.
-        winver; echo win version
+        & winver
       displayName: 'Run a multi-line script'
 
   - job: Veristand
