@@ -17,7 +17,7 @@ jobs:
 
     - script: |
         echo Add other tasks to build, test, and deploy your project.
-        winver
+        call winver
       displayName: 'Run a multi-line script'
 
   - job: Veristand
@@ -32,3 +32,11 @@ jobs:
         echo Add other tasks to build, test, and deploy your project.
         whoami
       displayName: 'Run a multi-line script'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo Hello world
+  
