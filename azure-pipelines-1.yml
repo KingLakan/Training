@@ -26,7 +26,7 @@ jobs:
           # Write your PowerShell commands here.
           
           winver
-        runScriptInSeparateScope: false
+        runScriptInSeparateScope: true
 
   - job: Veristand
     pool:
