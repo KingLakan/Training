@@ -19,13 +19,7 @@ jobs:
         echo Add other tasks to build, test, and deploy your project.
       displayName: 'Run a multi-line script'
 
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your PowerShell commands here.
-          
-          winver
+      
 
   - job: Veristand
     pool:
