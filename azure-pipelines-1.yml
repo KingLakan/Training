@@ -19,7 +19,12 @@ jobs:
         echo Add other tasks to build, test, and deploy your project.
       displayName: 'Run a multi-line script'
 
-      
+    - task: CmdLine@2
+      inputs:
+        script: |
+          echo Write your commands here
+          
+          winver&
 
   - job: Veristand
     pool:
