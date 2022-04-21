@@ -7,7 +7,13 @@ trigger:
 - main
 
 stages:
+
+  - stage: Build
+    jobs:
+    - job: Build
+
   - stage: Build_Stage_MIL
+    dependsOn: Build
     jobs:
       - job: Build_Mathworks_MIL
         pool: Windows_Pool
@@ -39,6 +45,7 @@ stages:
           displayName: 'Run a multi-line script'
 
   - stage: Build_Stage_HIL
+    dependsOn: Build
     jobs:
       - job: Mathworks_B
         pool: Windows_Pool
