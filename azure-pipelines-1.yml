@@ -27,9 +27,9 @@ stages:
             echo Add other tasks to build, test, and deploy your project.
           displayName: 'Run a multi-line script'
 
-        - task: PowerShell@2
+        - task: BatchScript@1
           inputs:
-            filePath: 'C:\Users\dsamuels\dummy.ps1'
+            filename: 'C:\Users\dsamuels\dummy.bat'
 
       - job: Build_Veristand_MIL
         pool:
