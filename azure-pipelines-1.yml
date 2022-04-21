@@ -7,9 +7,9 @@ trigger:
 - main
 
 stages:
-  - stage: A
+  - stage: Build Stage MIL
     jobs:
-      - job: Mathworks_A
+      - job: Build_Mathworks_MIL
         pool: Windows_Pool
     #      vmImage: ubuntu-latest
 
@@ -38,7 +38,7 @@ stages:
             whoami
           displayName: 'Run a multi-line script'
 
-  - stage: B
+  - stage: Build Stage HIL
     jobs:
       - job: Mathworks_B
         pool: Windows_Pool
