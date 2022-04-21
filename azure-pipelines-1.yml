@@ -31,7 +31,7 @@ stages:
           inputs:
             filePath: 'C:\Users\dsamuels\dummy.ps1'
 
-      - job: Veristand_A
+      - job: Build_Veristand_MIL
         pool:
           vmImage: ubuntu-latest
 
