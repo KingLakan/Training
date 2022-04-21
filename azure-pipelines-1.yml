@@ -6,33 +6,65 @@
 trigger:
 - main
 
-jobs:
-  - job: Mathworks
-    pool: Windows_Pool
-#      vmImage: ubuntu-latest
+stages:
+  - stage: A
+    jobs:
+      - job: Mathworks_A
+        pool: Windows_Pool
+    #      vmImage: ubuntu-latest
 
-    steps:
-    - script: echo Hello, Mathworks!
-      displayName: 'Run a one-line script'
+        steps:
+        - script: echo Hello, Mathworks!
+          displayName: 'Run a one-line script'
 
-    - script: |
-        echo Add other tasks to build, test, and deploy your project.
-      displayName: 'Run a multi-line script'
+        - script: |
+            echo Add other tasks to build, test, and deploy your project.
+          displayName: 'Run a multi-line script'
 
-    - task: PowerShell@2
-      inputs:
-        filePath: 'C:\Users\dsamuels\dummy.ps1'
+        - task: PowerShell@2
+          inputs:
+            filePath: 'C:\Users\dsamuels\dummy.ps1'
 
-  - job: Veristand
-    pool:
-      vmImage: ubuntu-latest
+      - job: Veristand_A
+        pool:
+          vmImage: ubuntu-latest
 
-    steps:
-    - script: echo Hello, Veristand!
-      displayName: 'Run a one-line script'
+        steps:
+        - script: echo Hello, Veristand!
+          displayName: 'Run a one-line script'
 
-    - script: |
-        echo Add other tasks to build, test, and deploy your project.
-        whoami
-      displayName: 'Run a multi-line script'
+        - script: |
+            echo Add other tasks to build, test, and deploy your project.
+            whoami
+          displayName: 'Run a multi-line script'
 
+  - stage: B
+    jobs:
+      - job: Mathworks_B
+        pool: Windows_Pool
+    #      vmImage: ubuntu-latest
+
+        steps:
+        - script: echo Hello, Mathworks!
+          displayName: 'Run a one-line script'
+
+        - script: |
+            echo Add other tasks to build, test, and deploy your project.
+          displayName: 'Run a multi-line script'
+
+        - task: PowerShell@2
+          inputs:
+            filePath: 'C:\Users\dsamuels\dummy.ps1'
+
+      - job: Veristand_B
+        pool:
+          vmImage: ubuntu-latest
+
+        steps:
+        - script: echo Hello, Veristand!
+          displayName: 'Run a one-line script'
+
+        - script: |
+            echo Add other tasks to build, test, and deploy your project.
+            whoami
+          displayName: 'Run a multi-line script'
