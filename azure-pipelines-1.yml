@@ -7,7 +7,7 @@ trigger:
 - main
 
 stages:
-  - stage: Build Stage MIL
+  - stage: Build_Stage_MIL
     jobs:
       - job: Build_Mathworks_MIL
         pool: Windows_Pool
@@ -38,7 +38,7 @@ stages:
             whoami
           displayName: 'Run a multi-line script'
 
-  - stage: Build Stage HIL
+  - stage: Build_Stage_HIL
     jobs:
       - job: Mathworks_B
         pool: Windows_Pool
