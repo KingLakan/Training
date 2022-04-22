@@ -62,7 +62,7 @@ stages:
         - script: echo Hello HIL, Veristand!
           displayName: 'Run a one-line script'
 
-  - stage: Test_MIL
+  - stage: Test_Stage_MIL
     dependsOn: Build_Stage_MIL
     jobs:
     - job: MIL_TEST
