@@ -49,7 +49,6 @@ stages:
     jobs:
       - job: Mathworks_B
         pool: Windows_Pool
-    #      vmImage: ubuntu-latest
 
         steps:
         - script: echo Hello HIL, Mathworks!
