@@ -68,10 +68,5 @@ stages:
           vmImage: ubuntu-latest
 
         steps:
-        - script: echo Hello, Veristand!
+        - script: echo Hello HIL, Veristand!
           displayName: 'Run a one-line script'
-
-        - script: |
-            echo Add other tasks to build, test, and deploy your project.
-            whoami
-          displayName: 'Run a multi-line script'
