@@ -52,16 +52,8 @@ stages:
     #      vmImage: ubuntu-latest
 
         steps:
-        - script: echo Hello, Mathworks!
+        - script: echo Hello HIL, Mathworks!
           displayName: 'Run a one-line script'
-
-        - script: |
-            echo Add other tasks to build, test, and deploy your project.
-          displayName: 'Run a multi-line script'
-
-        - task: PowerShell@2
-          inputs:
-            filePath: 'C:\Users\dsamuels\dummy.ps1'
 
       - job: Veristand_B
         pool:
