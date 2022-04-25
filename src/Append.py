@@ -26,7 +26,6 @@ class Models:
         Args:
             system_definition_path (str): path to system def file path = path + filename.nivssdf
         """
-
         try:
             if exists(system_definition_path):
                 self._system_definition_object = SystemDefinition(system_definition_path)
@@ -39,7 +38,6 @@ class Models:
 
     def _DefineVeristandObjects(self):
         """Define Veristand attributes"""
-
         self._firstTarget = self._system_definition_object.Root.GetTargets().GetTargetList()[0]
         self._models_selection = self._firstTarget.GetSimulationModels().GetModels()
         self._models_object = self._firstTarget.GetSimulationModels().GetModels().GetModels()
@@ -92,7 +90,6 @@ class Models:
         #     print(i,"\n")
         print("_modelOutput: ", _model_output_1.Name)
         print("_modelOutput: ", _model_output_2.Name)
-
         # Set Aliases
         _name1 = System.String("Outport0 Engine model ALIAS")
         _name2 = System.String("Outport1 Engine model ALIAS")
