@@ -5,7 +5,7 @@
 
 variables:
   - name: projectName
-    value: Default Project 7
+    value: Default Project
 
   - name: systemDefinitionFile
     value: veristand\$(projectName).nivssdf
@@ -32,12 +32,16 @@ steps:
       Contents: '**'
       TargetFolder: '$(Build.BinariesDirectory)'
 
-  - script:  echo 'Start and deploy Veristand project'
-  - task: BatchScript@1
+  - task: CmdLine@2
     inputs:
-      filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
-      arguments: '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\$(projectName)\$(projectName).nivsprj" -sysDef "$(Build.BinariesDirectory)\$(projectName).nivssdf" -deploy'
-      failOnStandardError: false
+      script: '"C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe" -openProject "$(Build.Repository.LocalPath)\$(projectName).nivsprj" -sysDef "$(Build.Repository.LocalPath)\$(systemDefinitionFile)." -deploy'
+
+#  - script:  echo 'Start and deploy Veristand project'
+#  - task: BatchScript@1
+#    inputs:
+#      filename: 'C:\Program Files\National Instruments\VeriStand 2020\Veristand.exe'
+#      arguments: '-openProject "$(Build.Repository.LocalPath)\$(projectName).nivsprj" -sysDef "$(Build.Repository.LocalPath)\$(systemDefinitionFile)." -deploy'
+#      failOnStandardError: false
 
 #  - task: UsePythonVersion@0
 #    inputs:
