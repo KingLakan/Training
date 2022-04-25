@@ -1,12 +1,12 @@
-import argparse
 
+import os
+import argparse
 import clr
 import sys
-import os
-import System
 import errno
-from System.Collections import *
 from os.path import exists
+import System # noqa
+from System.Collections import * # noqa
 
 
 sys.path.append("c:\\Program Files (x86)\\National Instruments\\VeriStand 2020\\nivs.lib\\Reference Assemblies")
@@ -14,66 +14,72 @@ clr.AddReference("NationalInstruments.VeriStand.SystemDefinitionAPI")
 clr.AddReference("NationalInstruments.VeriStand.ClientAPI")
 clr.AddReference("NationalInstruments.VeriStand")
 
-from NationalInstruments.VeriStand.SystemDefinitionAPI import SystemDefinition, Model, NodeIDUtil, Models
-from NationalInstruments.VeriStand import Error 
+from NationalInstruments.VeriStand.SystemDefinitionAPI import SystemDefinition, Model, NodeIDUtil, Models # noqa
+from NationalInstruments.VeriStand import Error # noqa
 
 class Models:
-    
+    """Append models to a System Definition file."""
+
     def __init__(self,system_definition_path: str):
         """Create model object from path
 
         Args:
             system_definition_path (str): path to system def file path = path + filename.nivssdf
         """
+
         try:
             if exists(system_definition_path):
-                self.__systemDefinitionObject = SystemDefinition(system_definition_path)
-                self.__DefineObjects()
+                self._system_definition_object = SystemDefinition(system_definition_path)
+                self._DefineVeristandObjects()
                 print("it exists")
             else:
                 raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), system_definition_path)
         except FileNotFoundError as e:
             print(e)
 
-    def __DefineObjects(self):
-        self.__firstTarget = self.__systemDefinitionObject.Root.GetTargets().GetTargetList()[0]
-        self.__modelsSection = self.__firstTarget.GetSimulationModels().GetModels()
-        self.__modelsObject = self.__firstTarget.GetSimulationModels().GetModels().GetModels()
-        [print("Models: ", i.Name) for i in self.__modelsObject]
-        print("modelsSection:", self.__modelsSection.Name)
+    def _DefineVeristandObjects(self):
+        """Define Veristand attributes"""
+
+        self._firstTarget = self._system_definition_object.Root.GetTargets().GetTargetList()[0]
+        self._models_selection = self._firstTarget.GetSimulationModels().GetModels()
+        self._models_object = self._firstTarget.GetSimulationModels().GetModels().GetModels()
+        [print("Models: ", i.Name) for i in self._models_object]
+        print("modelsSection:", self._models_selection.Name)
 
     def AddModel(self): # add str as input to choose model to add
+        """Add/Append model to System definition file."""
         # C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 4\Model\Engine Demo.dll
-        __modelName = System.String("Engine Demo 2")
-        __modelDesc = System.String("")
-        __modelPath = System.String(r"C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 4\Model\Engine Demo.dll")
-        __processor = System.Int32(0)
-        __decimation = System.Int32(1)
-        __initialState = System.UInt16(0)
-        __segmentsVectors = System.Boolean(False)
-        __importParameters = System.Boolean(True)
-        __importSignals = System.Boolean(True)
+        _model_name = System.String("Engine Demo 2")
+        _model_desc = System.String("")
+        _model_path = System.String(r"C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 4\Model\Engine Demo.dll")
+        _processor = System.Int32(0)
+        _decimation = System.Int32(1)
+        _initial_state = System.UInt16(0)
+        _segments_vectors = System.Boolean(False)
+        _import_parameters = System.Boolean(True)
+        _import_signals = System.Boolean(True)
         # Create a model object
-        __myNewModel = Model( __modelName,
-                            __modelDesc,
-                            __modelPath,
-                            __processor,
-                            __decimation,
-                            __initialState,
-                            __segmentsVectors,
-                            __importParameters,
-                            __importSignals )
+        _my_new_model = Model( _model_name,
+                            _model_desc,
+                            _model_path,
+                            _processor,
+                            _decimation,
+                            _initial_state,
+                            _segments_vectors,
+                            _import_parameters,
+                            _import_signals )
 
         # Add models to project
-        self.__modelsSection.AddModel(__myNewModel)
+        self._models_selection.AddModel(_my_new_model)
 
     def AddAliases(self):
+        """Add Aliases for the model to the system definition file."""
         # Hardcoded for engine demo
         # Read current set outports, return channel objects
-        __modelOutput1 = self.__modelsSection.GetModels()[0].GetOutportsSection().GetOutports()[0]
-        __modelOutput2 = self.__modelsSection.GetModels()[0].GetOutportsSection().GetOutports()[1]
-        __modelDesc = System.String("")
-        __error = Error()
+        _model_output_1 = self._models_selection.GetModels()[0].GetOutportsSection().GetOutports()[0]
+        _model_output_2 = self._models_selection.GetModels()[0].GetOutportsSection().GetOutports()[1]
+        _model_desc = System.String("")
+        _error = Error()
         # i = 0 # SKAPA EN GENERISK FUNKTION FÖR ATT TESTA
         # while(1):# Check nr of indexes
         #     try:
@@ -84,24 +90,25 @@ class Models:
         #             break
         #     i += 1
         #     print(i,"\n")
-        print("__modelOutput: ", __modelOutput1.Name)
-        print("__modelOutput: ", __modelOutput2.Name)
+        print("_modelOutput: ", _model_output_1.Name)
+        print("_modelOutput: ", _model_output_2.Name)
 
         # Set Aliases
-        __name1 = System.String("Outport0 Engine model ALIAS")
-        __name2 = System.String("Outport1 Engine model ALIAS")
-        self.__systemDefinitionObject.Root.GetAliases().AddNewAliasByReference(__name1,__modelDesc,__modelOutput1,__error)
-        self.__systemDefinitionObject.Root.GetAliases().AddNewAliasByReference(__name2,__modelDesc,__modelOutput2,__error)
+        _name1 = System.String("Outport0 Engine model ALIAS")
+        _name2 = System.String("Outport1 Engine model ALIAS")
+        self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_name1,_model_desc,_model_output_1,_error)
+        self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_name2,_model_desc,_model_output_2,_error)
 
     def SaveSystemDefinition(self):
-        __error = System.String("")
-        __error_out = System.String("")
-        __functionReturn, __error_out = self.__systemDefinitionObject.SaveSystemDefinitionFile(__error)
+        """Save changes to the system definition file."""
+        _error = System.String("")
+        _error_out = System.String("")
+        _function_return, _error_out = self._system_definition_object.SaveSystemDefinitionFile(_error)
 
-        if (not __error_out):
+        if (not _error_out):
             print("File saved")
         else:
-            print(__error_out)
+            print(_error_out)
 
 if __name__ == "__main__":
 
