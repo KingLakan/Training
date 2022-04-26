@@ -12,10 +12,10 @@ stages:
     jobs:
     - job: Build
 
-  - stage: Build_Stage_MIL
+  - stage: Build_Stage
     dependsOn: Build
     jobs:
-      - job: Build_Mathworks_MIL
+      - job: Build_MIL_GenericTarget
         pool: Windows_Pool
     #      vmImage: ubuntu-latest
 
@@ -31,7 +31,7 @@ stages:
           inputs:
             filename: 'C:\Users\dsamuels\dummy.bat'
 
-      - job: Build_Veristand_MIL
+      - job: Build_MIL_VeristandTarget
         pool:
           vmImage: ubuntu-latest
 
@@ -44,6 +44,10 @@ stages:
             whoami
           displayName: 'Run a multi-line script'
 
+      - job: Build_MIL_FPGATarget
+        pool: Windows_Pool
+  
+    #      vmImage: ubuntu-latest
   - stage: Build_Stage_HIL
     dependsOn: Build
     jobs:
