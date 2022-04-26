@@ -32,6 +32,7 @@ stages:
             filename: 'C:\Users\dsamuels\dummy.bat'
 
       - job: Build_MIL_VeristandTarget
+        # using Veristand Model Framework
         pool:
           vmImage: ubuntu-latest
 
@@ -46,7 +47,9 @@ stages:
 
       - job: Build_MIL_FPGATarget
         pool: Windows_Pool
-  
+
+      - job: Build_MIL_EmbededTarget # DUT as target
+        pool: Windows_Pool
     #      vmImage: ubuntu-latest
   - stage: Build_Stage_HIL
     dependsOn: Build
