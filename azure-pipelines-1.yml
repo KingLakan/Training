@@ -12,10 +12,10 @@ stages:
     jobs:
     - job: Build
 
-  - stage: Build_Stage_MIL
+  - stage: Build_Stage
     dependsOn: Build
     jobs:
-      - job: Build_Mathworks_MIL
+      - job: Build_MIL_GenericTarget
         pool: Windows_Pool
     #      vmImage: ubuntu-latest
 
@@ -31,7 +31,8 @@ stages:
           inputs:
             filename: 'C:\Users\dsamuels\dummy.bat'
 
-      - job: Build_Veristand_MIL
+      - job: Build_MIL_VeristandTarget
+        # using Veristand Model Framework
         pool:
           vmImage: ubuntu-latest
 
@@ -44,6 +45,12 @@ stages:
             whoami
           displayName: 'Run a multi-line script'
 
+      - job: Build_MIL_FPGATarget
+        pool: Windows_Pool
+
+      - job: Build_MIL_EmbededTarget # DUT as target
+        pool: Windows_Pool
+    #      vmImage: ubuntu-latest
   - stage: Build_Stage_HIL
     dependsOn: Build
     jobs:
@@ -63,6 +70,6 @@ stages:
           displayName: 'Run a one-line script'
 
   - stage: Test_Stage_MIL
-    dependsOn: Build_Stage_MIL
+#    dependsOn: Build_Stage_MIL
     jobs:
     - job: MIL_TEST
