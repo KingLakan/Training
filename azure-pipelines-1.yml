@@ -8,6 +8,7 @@ trigger:
 
 variables:
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  isDev: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
 
 stages:
 
@@ -15,7 +16,7 @@ stages:
     jobs:
     - job: Build
 
-  - stage: Build_Stage
+  - stage: Build_Stage_Prod
     dependsOn: Build
     condition: and(succeeded(), eq(variables.isMain, 'true'))
     jobs:
@@ -74,6 +75,13 @@ stages:
         steps:
         - script: echo Hello HIL, Veristand!
           displayName: 'Run a one-line script'
+
+  - stage: Build_Stage_Dev
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables.isDev, 'true'))
+    jobs:
+      - job: Mathworks_B
+        pool: Windows_Pool
 
   - stage: Test_Stage
     dependsOn: Build_Stage
