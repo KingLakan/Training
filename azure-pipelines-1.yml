@@ -70,6 +70,6 @@ stages:
           displayName: 'Run a one-line script'
 
   - stage: Test_Stage_MIL
-#    dependsOn: Build_Stage_MIL
+    dependsOn: Build_Stage
     jobs:
     - job: MIL_TEST
