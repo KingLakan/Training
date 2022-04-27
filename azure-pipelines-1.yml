@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
 stages:
 
   - stage: Build
@@ -14,6 +17,7 @@ stages:
 
   - stage: Build_Stage
     dependsOn: Build
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
     jobs:
       - job: Build_MIL_GenericTarget
         pool: Windows_Pool
@@ -54,6 +58,7 @@ stages:
     #      vmImage: ubuntu-latest
   - stage: Build_Stage_HIL
     dependsOn: Build
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
     jobs:
       - job: Mathworks_B
         pool: Windows_Pool
@@ -72,5 +77,6 @@ stages:
 
   - stage: Test_Stage
     dependsOn: Build_Stage
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
     jobs:
     - job: MIL_TEST
