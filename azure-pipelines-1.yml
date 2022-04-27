@@ -84,7 +84,7 @@ stages:
         pool: Windows_Pool
 
   - stage: Test_Stage
-    dependsOn: Build_Stage
+    dependsOn: Build_Stage_Prod
     condition: and(succeeded(), eq(variables.isMain, 'true'))
     jobs:
     - job: MIL_TEST
