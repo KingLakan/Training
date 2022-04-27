@@ -56,6 +56,10 @@ stages:
 
       - job: Build_MIL_EmbededTarget # DUT as target
         pool: Windows_Pool
+
+      - job: Build_MIL_VeristandProject # DUT as target
+        dependsOn: Build_MIL_VeristandTarget
+        pool: Windows_Pool
     #      vmImage: ubuntu-latest
 
   # - stage: Build_Stage_HIL
