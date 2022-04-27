@@ -27,14 +27,26 @@ class Models:
             system_definition_path (str): path to system def file path = path + filename.nivssdf
         """
         try:
-            if exists(system_definition_path):
-                self._system_definition_object = SystemDefinition(system_definition_path)
-                self._DefineVeristandObjects()
-                print("it exists")
-            else:
-                raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), system_definition_path)
+            self._CheckIfValidFile(system_definition_path)
         except FileNotFoundError as e:
             print(e)
+            raise FileNotFoundError
+
+    def _CheckIfValidFile(self, system_definition_path: str):
+        """Check if file exists and has the correct extension
+
+        Args:
+            system_definition_path (str): Path to the systemdefinition file including its extension
+
+        Raises:
+            FileNotFoundError: If file is not found the method raises FileNotFoundError
+        """
+        if exists(system_definition_path) and system_definition_path.endswith('.nivssdf'):
+            self._system_definition_object = SystemDefinition(system_definition_path)
+            self._DefineVeristandObjects()
+            print("it exists")
+        else:
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), system_definition_path)
 
     def _DefineVeristandObjects(self):
         """Define Veristand attributes"""
