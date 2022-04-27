@@ -21,6 +21,7 @@ stages:
 
         steps:
         - script: echo Hello, Mathworks!
+        - script: echo $(Build.SourceBranch)
           displayName: 'Run a one-line script'
 
         - script: |
@@ -69,7 +70,7 @@ stages:
         - script: echo Hello HIL, Veristand!
           displayName: 'Run a one-line script'
 
-  - stage: Test_Stage_MIL
+  - stage: Test_Stage
     dependsOn: Build_Stage
     jobs:
     - job: MIL_TEST
