@@ -59,8 +59,8 @@ class Models:
 
     @staticmethod
     def _ValidatePath(system_definition_path: str):
-        if not exists(system_definition_path) and \
-                system_definition_path.endswith('.nivssdf'):
+        if not (exists(system_definition_path) and
+                system_definition_path.endswith('.nivssdf')):
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
                                     system_definition_path)
 
