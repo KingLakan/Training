@@ -24,49 +24,45 @@ class Models:
     """Append models to a System Definition file."""
 
     def __init__(self, system_definition_path: str):
-        """Create model object from path
+        """Class method from_system_definition_path triggers initialization 
+           of the __init__ method.
 
         Args:
             system_definition_path (str): path to system def file
             path = path + filename.nivssdf
         """
-        try:
-            self._CheckIfValidFile(system_definition_path)
-        except FileNotFoundError as e:
-            print(e)
-            raise FileNotFoundError
-
-    def _CheckIfValidFile(self, system_definition_path: str):
-        """Check if file exists and has the correct extension
-
-        Args:
-            system_definition_path (str): Path to the systemdefinition file
-            including its extension.
-
-        Raises:
-            FileNotFoundError: If file is not found the method raises
-            FileNotFoundError
-        """
-        if exists(system_definition_path) and \
-                system_definition_path.endswith('.nivssdf'):
-            self._system_definition_object = \
-                SystemDefinition(system_definition_path)
-            self._DefineVeristandObjects()
-            print("it exists")
-        else:
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
-                                    system_definition_path)
-
-    def _DefineVeristandObjects(self):
-        """Define Veristand attributes"""
+        self._system_definition_object = \
+            SystemDefinition(system_definition_path)
         self._firstTarget = (self._system_definition_object.Root.GetTargets().
                              GetTargetList()[0])
         self._models_selection = (self._firstTarget.GetSimulationModels().
                                   GetModels())
         self._models_object = (self._firstTarget.GetSimulationModels().
                                GetModels().GetModels())
-        [print("Models: ", i.Name) for i in self._models_object]
-        print("modelsSection:", self._models_selection.Name)
+
+    @classmethod
+    def from_system_definition_path(cls, system_definition_path: str):
+        """Used as constructor for the Models class
+
+        Args:
+            system_definition_path (str): path + filename of systemdefinition 
+            file
+
+        Returns:
+            _type_: Object of class
+        """
+        try:
+            cls._ValidatePath(system_definition_path)
+        except FileNotFoundError as e:
+            print(e)
+        return cls(system_definition_path)
+
+    @staticmethod
+    def _ValidatePath(system_definition_path: str):
+        if not exists(system_definition_path) and \
+                system_definition_path.endswith('.nivssdf'):
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
+                                    system_definition_path)
 
     def AddModel(self):  # add str as input to choose model to add
         """Add/Append model to System definition file."""
@@ -74,9 +70,9 @@ class Models:
         # Engine Demo 4\Model\Engine Demo.dll
         _model_name = System.String("Engine Demo 2")
         _model_desc = System.String("")
-        _model_path = (System.String(r"C:\Users\dsamuels\Documents\
-                       VeriStand Projects\Engine Demo 4\Model\
-                        Engine Demo.dll"))
+        _model_path = System.String(r"C:\Users\dsamuels\Documents"
+                                    r"\VeriStand Projects\Engine Demo 4"
+                                    r"\Model\Engine Demo.dll")
         _processor = System.Int32(0)
         _decimation = System.Int32(1)
         _initial_state = System.UInt16(0)
@@ -168,11 +164,11 @@ if __name__ == "__main__":
 
     print("inputted file: {}".format(args.file), "\n")
 
-    apa = Models(args.file)  # repr -> to raw string
-    # apa.AddModel()
-    # apa.SaveSystemDefinition()
+    # apa = Models(args.file)  # repr -> to raw string
+    apa = Models.from_system_definition_path(args.file)
+    apa.AddModel()
+    apa.SaveSystemDefinition()
     # apa.AddAliases()
     apa.AddAliases()
-
     apa.SaveSystemDefinition()
 
