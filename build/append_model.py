@@ -14,13 +14,13 @@ clr.AddReference("NationalInstruments.VeriStand.SystemDefinitionAPI")
 clr.AddReference("NationalInstruments.VeriStand.ClientAPI")
 clr.AddReference("NationalInstruments.VeriStand")
 
-from NationalInstruments.VeriStand.SystemDefinitionAPI import SystemDefinition, Model, NodeIDUtil, Models # noqa
+from NationalInstruments.VeriStand.SystemDefinitionAPI import SystemDefinition, Model, NodeIDUtil # noqa
 from NationalInstruments.VeriStand import Error # noqa
 
 class Models:
     """Append models to a System Definition file."""
 
-    def __init__(self,system_definition_path: str):
+    def __init__(self, system_definition_path: str):
         """Create model object from path
 
         Args:
@@ -83,30 +83,30 @@ class Models:
         self._models_selection.AddModel(_my_new_model)
 
     def AddAliases(self):
-        """Add Aliases for the model to the system definition file."""
-        # Hardcoded for engine demo
-        # Read current set outports, return channel objects
-        _model_output_1 = self._models_selection.GetModels()[0].GetOutportsSection().GetOutports()[0]
-        _model_output_2 = self._models_selection.GetModels()[0].GetOutportsSection().GetOutports()[1]
+        """Add Aliases from the model to the system definition file."""
         _model_desc = System.String("")
         _error = Error()
-        # i = 0 # SKAPA EN GENERISK FUNKTION FÖR ATT TESTA
-        # while(1):# Check nr of indexes
-        #     try:
-        #         __modelOutput1 = self.__modelsSection.GetModels()[0].GetOutportsSection().GetOutports()[i]
-        #     except IndexError as e:
-        #         if e:
-        #             print("Error",e)
-        #             break
-        #     i += 1
-        #     print(i,"\n")
-        print("_modelOutput: ", _model_output_1.Name)
-        print("_modelOutput: ", _model_output_2.Name)
-        # Set Aliases
-        _name1 = System.String("Outport0 Engine model ALIAS")
-        _name2 = System.String("Outport1 Engine model ALIAS")
-        self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_name1,_model_desc,_model_output_1,_error)
-        self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_name2,_model_desc,_model_output_2,_error)
+        #Read
+        _array_of_model_outPorts = self._models_selection.GetModels()[0].GetOutportsSection().GetOutports()
+        _array_of_model_inPorts = self._models_selection.GetModels()[0].GetInportsSection().GetInports()
+        _array_of_model_parameters = self._models_selection.GetModels()[0].GetParametersSection().GetParameters()
+        _array_of_model_signals = self._models_selection.GetModels()[0].GetParametersSection().GetParameters()
+
+        #Write Aliases
+        for n in range(0,len(_array_of_model_outPorts)):
+            self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_array_of_model_outPorts[n].Name,_model_desc,_array_of_model_outPorts[n],_error)
+        for n in range(0,len(_array_of_model_inPorts)):
+            self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_array_of_model_inPorts[n].Name,_model_desc,_array_of_model_inPorts[n],_error)
+        for n in range(0,len(_array_of_model_parameters)):
+            self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_array_of_model_parameters[n].Name,_model_desc,_array_of_model_parameters[n],_error)
+        for n in range(0,len(_array_of_model_signals)):
+            self._system_definition_object.Root.GetAliases().AddNewAliasByReference(_array_of_model_signals[n].Name,_model_desc,_array_of_model_signals[n],_error)
+
+        # [print("OutPorts: ", i.Name) for i in _array_of_model_outPorts]
+        # [print("InPorts: ", i.Name) for i in _array_of_model_inPorts]
+        # [print("Parameters: ", i.Name) for i in _array_of_model_parameters]
+        # [print("Parameters: ", i.Name) for i in _array_of_model_signals]
+        print("Aiases written ok")
 
     def SaveSystemDefinition(self):
         """Save changes to the system definition file."""
@@ -132,7 +132,10 @@ if __name__ == "__main__":
     print("inputted file: {}".format(args.file), "\n")
 
     apa = Models(args.file) #repr -> to raw string
-    apa.AddModel()
+    #apa.AddModel()
+    #apa.SaveSystemDefinition()
+    #apa.AddAliases()
     apa.AddAliases()
+
     apa.SaveSystemDefinition()
 
