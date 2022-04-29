@@ -64,15 +64,15 @@ class Models:
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
                                     system_definition_path)
 
-    def AddModel(self):  # add str as input to choose model to add
+    def AddModel(self, model_path):  # add str as input to choose model to add
         """Add/Append model to System definition file."""
         # C:\Users\dsamuels\Documents\VeriStand Projects\
         # Engine Demo 4\Model\Engine Demo.dll
+        _model_error = Error()
+        self._model_added = None
         _model_name = System.String("Engine Demo 2")
         _model_desc = System.String("")
-        _model_path = System.String(r"C:\Users\dsamuels\Documents"
-                                    r"\VeriStand Projects\Engine Demo 4"
-                                    r"\Model\Engine Demo.dll")
+        self._model_path = model_path
         _processor = System.Int32(0)
         _decimation = System.Int32(1)
         _initial_state = System.UInt16(0)
@@ -82,7 +82,7 @@ class Models:
         # Create a model object
         _my_new_model = Model(_model_name,
                               _model_desc,
-                              _model_path,
+                              self._model_path,
                               _processor,
                               _decimation,
                               _initial_state,
@@ -91,7 +91,9 @@ class Models:
                               _import_signals)
 
         # Add models to project
-        self._models_selection.AddModel(_my_new_model)
+        [self._model_added,_model_error] = (self._models_selection.
+                                         AddModel(_my_new_model, _model_error))
+        return self._model_added
 
     def AddAliases(self):
         """Add Aliases from the model to the system definition file."""
@@ -166,7 +168,9 @@ if __name__ == "__main__":
 
     # apa = Models(args.file)  # repr -> to raw string
     apa = Models.from_system_definition_path(args.file)
-    apa.AddModel()
+    apa.AddModel(System.String(r"C:\Users\dsamuels\Documents"
+                                    r"\VeriStand Projects\Engine Demo 4"
+                                    r"\Model\Engine Demo.dll"))
     apa.SaveSystemDefinition()
     # apa.AddAliases()
     apa.AddAliases()
