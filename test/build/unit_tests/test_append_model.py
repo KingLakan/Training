@@ -1,7 +1,7 @@
 import sys
 import pathlib
 import pytest
-import clr
+import clr # noqa
 import System # noqa
 
 sys.path.append(str(pathlib.Path(pathlib.Path.cwd().parent.parent.parent,
