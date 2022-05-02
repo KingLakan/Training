@@ -4,6 +4,7 @@ import argparse
 import clr
 import sys
 import errno
+import pathlib
 from os.path import exists
 import System # noqa
 from System.Collections import * # noqa
@@ -65,75 +66,80 @@ class Models:
                                     system_definition_path)
 
     def AddModel(self, model_path):  # add str as input to choose model to add
-        """Add/Append model to System definition file."""
-        # C:\Users\dsamuels\Documents\VeriStand Projects\
-        # Engine Demo 4\Model\Engine Demo.dll
-        _model_error = Error()
-        self._model_added = None
-        _model_name = System.String("Engine Demo 2")
-        _model_desc = System.String("")
-        self._model_path = model_path
-        _processor = System.Int32(0)
-        _decimation = System.Int32(1)
-        _initial_state = System.UInt16(0)
-        _segments_vectors = System.Boolean(False)
-        _import_parameters = System.Boolean(True)
-        _import_signals = System.Boolean(True)
+        """Add/Append model to System definition file
+
+        Args:
+            model_path (str): Path to model binary file
+
+        Returns:
+            bool: Model loaded
+        """
+        model_error = Error()
+        model_added = None
+        model_name = System.String("Loaded model")
+        model_desc = System.String("")
+        model_path = model_path
+        processor = System.Int32(0)
+        decimation = System.Int32(1)
+        initial_state = System.UInt16(0)
+        segments_vectors = System.Boolean(False)
+        import_parameters = System.Boolean(True)
+        import_signals = System.Boolean(True)
         # Create a model object
-        _my_new_model = Model(_model_name,
-                              _model_desc,
-                              self._model_path,
-                              _processor,
-                              _decimation,
-                              _initial_state,
-                              _segments_vectors,
-                              _import_parameters,
-                              _import_signals)
+        my_new_model = Model(model_name,
+                             model_desc,
+                             model_path,
+                             processor,
+                             decimation,
+                             initial_state,
+                             segments_vectors,
+                             import_parameters,
+                             import_signals)
 
         # Add models to project
-        [self._model_added,_model_error] = (self._models_selection.
-                                         AddModel(_my_new_model, _model_error))
-        return self._model_added
+        [model_added, model_error] = (self._models_selection.
+                                      AddModel(my_new_model, model_error))
+        return model_added
 
     def AddAliases(self):
         """Add Aliases from the model to the system definition file."""
-        _model_desc = System.String("")
-        _error = Error()
+        model_desc = System.String("")
+        error = Error()
         # Read
-        _array_of_model_outPorts = (self._models_selection.GetModels()[0].
-                                    GetOutportsSection().GetOutports())
-        _array_of_model_inPorts = (self._models_selection.GetModels()[0].
-                                   GetInportsSection().GetInports())
-        _array_of_model_parameters = (self._models_selection.GetModels()[0].
-                                      GetParametersSection().GetParameters())
-        _array_of_model_signals = (self._models_selection.GetModels()[0].
-                                   GetParametersSection().GetParameters())
+        array_of_model_outPorts = (self._models_selection.GetModels()[0].
+                                   GetOutportsSection().GetOutports())
+        array_of_model_inPorts = (self._models_selection.GetModels()[0].
+                                  GetInportsSection().GetInports())
+        array_of_model_parameters = (self._models_selection.GetModels()[0].
+                                     GetParametersSection().GetParameters())
+        array_of_model_signals = (self._models_selection.GetModels()[0].
+                                  GetParametersSection().GetParameters())
 
         # Write Aliases
-        for n in range(0, len(_array_of_model_outPorts)):
+        for n in range(0, len(array_of_model_outPorts)):
             (self._system_definition_object.Root.GetAliases().
-             AddNewAliasByReference(_array_of_model_outPorts[n].Name,
-                                    _model_desc,
-                                    _array_of_model_outPorts[n],
-                                    _error))
-        for n in range(0, len(_array_of_model_inPorts)):
+             AddNewAliasByReference(array_of_model_outPorts[n].Name,
+                                    model_desc,
+                                    array_of_model_outPorts[n],
+                                    error))
+        for n in range(0, len(array_of_model_inPorts)):
             (self._system_definition_object.Root.GetAliases().
-             AddNewAliasByReference(_array_of_model_inPorts[n].Name,
-                                    _model_desc,
-                                    _array_of_model_inPorts[n],
-                                    _error))
-        for n in range(0, len(_array_of_model_parameters)):
+             AddNewAliasByReference(array_of_model_inPorts[n].Name,
+                                    model_desc,
+                                    array_of_model_inPorts[n],
+                                    error))
+        for n in range(0, len(array_of_model_parameters)):
             (self._system_definition_object.Root.GetAliases().
-             AddNewAliasByReference(_array_of_model_parameters[n].Name,
-                                    _model_desc,
-                                    _array_of_model_parameters[n],
-                                    _error))
-        for n in range(0, len(_array_of_model_signals)):
+             AddNewAliasByReference(array_of_model_parameters[n].Name,
+                                    model_desc,
+                                    array_of_model_parameters[n],
+                                    error))
+        for n in range(0, len(array_of_model_signals)):
             (self._system_definition_object.Root.GetAliases().
-             AddNewAliasByReference(_array_of_model_signals[n].Name,
-                                    _model_desc,
-                                    _array_of_model_signals[n],
-                                    _error))
+             AddNewAliasByReference(array_of_model_signals[n].Name,
+                                    model_desc,
+                                    array_of_model_signals[n],
+                                    error))
 
         # [print("OutPorts: ", i.Name) for i in _array_of_model_outPorts]
         # [print("InPorts: ", i.Name) for i in _array_of_model_inPorts]
@@ -143,15 +149,16 @@ class Models:
 
     def SaveSystemDefinition(self):
         """Save changes to the system definition file."""
-        _error = System.String("")
-        _error_out = System.String("")
-        _function_return, _error_out = self._system_definition_object. \
-            SaveSystemDefinitionFile(_error)
+        error = System.String("")
+        error_out = System.String("")
+        file_saved, error_out = self._system_definition_object. \
+            SaveSystemDefinitionFile(error)
 
-        if (not _error_out):
+        if (not error_out):
             print("File saved")
+            return file_saved
         else:
-            print(_error_out)
+            print(error_out)
 
 
 if __name__ == "__main__":
@@ -166,13 +173,13 @@ if __name__ == "__main__":
 
     print("inputted file: {}".format(args.file), "\n")
 
-    # apa = Models(args.file)  # repr -> to raw string
-    apa = Models.from_system_definition_path(args.file)
-    apa.AddModel(System.String(r"C:\Users\dsamuels\Documents"
-                                    r"\VeriStand Projects\Engine Demo 4"
-                                    r"\Model\Engine Demo.dll"))
-    apa.SaveSystemDefinition()
+    veristand = Models.from_system_definition_path(args.file)
+    model_path = pathlib.Path(pathlib.Path.cwd().parent,
+                              'bin', 'Engine Demo.dll')
+    veristand.AddModel(System.String(str(model_path)))
+    print("Model written ok")
+    veristand.SaveSystemDefinition()
     # apa.AddAliases()
-    apa.AddAliases()
-    apa.SaveSystemDefinition()
+    veristand.AddAliases()
+    veristand.SaveSystemDefinition()
 
