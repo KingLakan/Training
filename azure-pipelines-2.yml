@@ -14,7 +14,9 @@ steps:
 
 - script:
     echo $(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1
+
 - task: PowerShell@2
   inputs:
     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
-  displayName: 'Run a multi-line script'
+    pwsh: true
+    workingDirectory: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
