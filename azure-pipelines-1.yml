@@ -29,14 +29,6 @@ stages:
         - script: echo $(Build.SourceBranch)
           displayName: 'Run a one-line script'
 
-        - script: |
-            echo Add other tasks to build, test, and deploy your project.
-          displayName: 'Run a multi-line script'
-
-        - task: BatchScript@1
-          inputs:
-            filename: 'C:\Users\dsamuels\dummy.bat'
-
       - job: Build_MIL_VeristandTarget
         # using Veristand Model Framework
         pool:
@@ -45,11 +37,6 @@ stages:
         steps:
         - script: echo Hello, Veristand!
           displayName: 'Run a one-line script'
-
-        - script: |
-            echo Add other tasks to build, test, and deploy your project.
-            whoami
-          displayName: 'Run a multi-line script'
 
       - job: Build_MIL_FPGATarget
         pool: Windows_Pool
@@ -61,25 +48,6 @@ stages:
         dependsOn: Build_MIL_VeristandTarget
         pool: Windows_Pool
     #      vmImage: ubuntu-latest
-
-  # - stage: Build_Stage_HIL
-  #   dependsOn: Build
-    # condition: and(succeeded(), eq(variables.isMain, 'true'))
-    # jobs:
-    #   - job: Mathworks_B
-    #     pool: Windows_Pool
-
-    #     steps:
-    #     - script: echo Hello HIL, Mathworks!
-    #       displayName: 'Run a one-line script'
-
-    #   - job: Veristand_B
-    #     pool:
-    #       vmImage: ubuntu-latest
-
-    #     steps:
-    #     - script: echo Hello HIL, Veristand!
-    #       displayName: 'Run a one-line script'
 
   - stage: Build_Stage_Dev
     dependsOn: Build
@@ -93,3 +61,7 @@ stages:
     condition: and(succeeded(), eq(variables.isMain, 'true'))
     jobs:
     - job: MIL_TEST
+      pool: Windows_Pool
+
+    - job: HIL_TEST 
+      pool: Windows_Pool
