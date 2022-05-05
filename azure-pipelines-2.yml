@@ -15,4 +15,4 @@ steps:
 - script:
     echo $(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1
 
-- powershell: .\$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1
+- powershell: $(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1
