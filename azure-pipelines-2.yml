@@ -17,5 +17,5 @@ steps:
 
 - task: PowerShell@2
   inputs:
-    filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
-    workingDirectory: '$(Build.Repository.LocalPath)/build/'
+    filePath: '$(Build.Repository.LocalPath)\build\depoy_veristand_project.ps1'
+#    workingDirectory: '$(Build.Repository.LocalPath)/build/'
