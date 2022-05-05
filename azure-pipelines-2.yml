@@ -14,6 +14,6 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    echo $(Build.Repository.LocalPath/build)
+    echo $(Build.Repository.LocalPath)/build
 
   displayName: 'Run a multi-line script'
