@@ -1,0 +1,21 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script:
+    echo $(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1
+- task: PowerShell@2
+  inputs:
+    filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+  displayName: 'Run a multi-line script'
