@@ -23,10 +23,19 @@ jobs:
   #     targetType: 'inline'
   #     script: |
   #       & start-Process -FilePath "C:\Windows\System32\winver.exe" -Wait
+
   - task: PowerShell@2
     inputs:
-      filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+      targetType: 'inline'
+      script: 'winver.exe'
+      workingDirectory: 'C:\Windows\System32'
       runScriptInSeparateScope: true
+  
+  #     runScriptInSeparateScope: true
+  # - task: PowerShell@2
+  #   inputs:
+  #     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+  #     runScriptInSeparateScope: true
   #    ignoreLASTEXITCODE: true
   #    runScriptInSeparateScope: false
   #    showWarnings: true
