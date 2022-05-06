@@ -5,11 +5,11 @@ Write-Host "Running deploy veristand"
 #start-Process -FilePath "C:\Program Files\National Instruments\VeriStand 2020\veristand.exe" -ArgumentList '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo 2.nivsprj"','-sysDef "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo.nivssdf"','-deploy' -RedirectStandardOutput Out.txt -passThru -Wait 
 
 $pinfo = New-Object System.Diagnostics.ProcessStartInfo
-$pinfo.FileName = "ping.exe"
+$pinfo.FileName = "winver.exe"
 $pinfo.RedirectStandardError = $true
 $pinfo.RedirectStandardOutput = $true
 $pinfo.UseShellExecute = $false
-$pinfo.Arguments = "localhost"
+#$pinfo.Arguments = "localhost"
 $p = New-Object System.Diagnostics.Process
 $p.StartInfo = $pinfo
 $p.Start() | Out-Null
