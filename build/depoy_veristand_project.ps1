@@ -10,7 +10,8 @@ Write-Host "Running deploy veristand"
 
 
 $pinfo = New-Object System.Diagnostics.ProcessStartInfo
-$pinfo.FileName = "C:\Program Files\National Instruments\VeriStand 2020\veristand.exe" '-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo 2.nivsprj"' '-sysDef "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo.nivssdf"' '-deploy'
+$pinfo.FileName = "C:\Program Files\National Instruments\VeriStand 2020\veristand.exe"
+$process.StartInfo.Arguments ='-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo 2.nivsprj" -sysDef "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo.nivssdf" -deploy'
 $pinfo.RedirectStandardError = $true
 $pinfo.RedirectStandardOutput = $true
 $pinfo.UseShellExecute = $false
