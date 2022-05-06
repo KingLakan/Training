@@ -12,9 +12,14 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- task: PowerShell@2
-  inputs:
-    filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
-    ignoreLASTEXITCODE: true
+#- task: PowerShell@2
+#  inputs:
+#    filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+#    ignoreLASTEXITCODE: true
 #    runScriptInSeparateScope: true
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'start-Process -FilePath "C:\Program Files\National Instruments\VeriStand 2020\veristand.exe" -ArgumentList ''-openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo 2.nivsprj"'',''-sysDef "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo.nivssdf"'', ''-deploy'''
+    workingDirectory: '$(Build.SourcesDirectory)'
