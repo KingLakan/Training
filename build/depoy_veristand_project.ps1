@@ -6,7 +6,7 @@ Write-Host "Running deploy veristand"
 
 C:\Windows\System32\winver.exe
 
-#exit 0
+exit 0
 #$test.StartTime 
 
 #& "C:\Program Files\National Instruments\VeriStand 2020\veristand.exe" -openProject "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo 2.nivsprj" -sysDef "C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 2\Engine Demo.nivssdf" -deploy
