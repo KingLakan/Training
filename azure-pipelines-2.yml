@@ -17,4 +17,5 @@ steps:
     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
     ignoreLASTEXITCODE: true
     runScriptInSeparateScope: true
+    showWarnings: true
 
