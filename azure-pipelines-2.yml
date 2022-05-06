@@ -22,7 +22,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        & 'start-process -FilePath "C:\Windows\System32\winver.exe" -Wait'
+        & start-Process -FilePath "C:\Windows\System32\winver.exe" -Wait
   # - task: PowerShell@2
   #   inputs:
   #     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
