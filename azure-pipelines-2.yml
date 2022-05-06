@@ -25,6 +25,7 @@ jobs:
         Start-Process powershell.exe -ArgumentList '-file $(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
       runScriptInSeparateScope: true
       ignoreLASTEXITCODE: true
+      errorActionPreference: silentlyContinue
   # - task: PowerShell@2
   #   inputs:
   #     targetType: 'inline'
