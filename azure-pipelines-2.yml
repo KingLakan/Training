@@ -26,6 +26,7 @@ jobs:
   - task: PowerShell@2
     inputs:
       filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+      runScriptInSeparateScope: true
   #    ignoreLASTEXITCODE: true
   #    runScriptInSeparateScope: false
   #    showWarnings: true
