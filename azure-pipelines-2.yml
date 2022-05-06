@@ -18,17 +18,17 @@ jobs:
   - script: echo job1!
     displayName: 'Run a one-line script'
 
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: |
-        & start-Process -FilePath "C:\Windows\System32\winver.exe" -Wait
   # - task: PowerShell@2
   #   inputs:
-  #     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
-  # #    ignoreLASTEXITCODE: true
-  #     runScriptInSeparateScope: false
-  #     showWarnings: true
+  #     targetType: 'inline'
+  #     script: |
+  #       & start-Process -FilePath "C:\Windows\System32\winver.exe" -Wait
+  - task: PowerShell@2
+    inputs:
+      filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+  #    ignoreLASTEXITCODE: true
+  #    runScriptInSeparateScope: false
+  #    showWarnings: true
 
 - job: job2
   dependsOn: job0
