@@ -15,21 +15,15 @@ jobs:
   pool: Windows_Pool
 
   steps:
-  - script: echo job1!
+  - script: Start-Process powershell.exe -ArgumentList '-file $(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
     displayName: 'Run a one-line script'
 
   # - task: PowerShell@2
   #   inputs:
   #     targetType: 'inline'
   #     script: |
-  #       & start-Process -FilePath "C:\Windows\System32\winver.exe" -Wait
-
-  - task: Bash@3
-    inputs:
-      targetType: 'inline'
-      script: 'winver.exe'
-      workingDirectory: '/c/Windows/System32/'
-
+  #       start-Process -FilePath "C:\Windows\System32\winver.exe" -Wait
+        
   # - task: PowerShell@2
   #   inputs:
   #     targetType: 'inline'
