@@ -36,7 +36,11 @@ jobs:
   - script: echo job2!
     displayName: 'Run a one-line script'
 
-  - task: PythonScript@0
+  # - task: PythonScript@0
+  #   inputs:
+  #     scriptSource: 'filePath'
+  #     scriptPath: '$(Build.Repository.LocalPath)/build/deploy.py'
+
+  - task: PowerShell@2
     inputs:
-      scriptSource: 'filePath'
-      scriptPath: '$(Build.Repository.LocalPath)/build/deploy.py'
+      filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
