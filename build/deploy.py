@@ -1,3 +1,4 @@
+from ast import Pass
 from operator import sub
 import clr
 import pathlib
@@ -38,7 +39,7 @@ def StartGateway():
     if status_output == "Server running":
         return True
     else:
-        exit(1)
+        pass#exit(1)
 
 def StopGateway():
     """Stop Veristand silent gateway
@@ -55,7 +56,7 @@ def StopGateway():
     if status_output == "Server stopped":
         return True
     else:
-        exit(1)
+        pass#exit(1)
 
 class DeploymentHandler:
 
