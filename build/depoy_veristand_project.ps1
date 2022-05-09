@@ -3,7 +3,7 @@
 Write-Host "Running deploy veristand"
 Write-Host "Start Gateway"
 $cwd = Get-Location
-py.exe $cwd\start_gateway.py
+py.exe $cwd\build\start_gateway.py
 
 Write-Host "Deploy System definition"
-py.exe $cwd\deploy.py
+py.exe $cwd\build\deploy.py
