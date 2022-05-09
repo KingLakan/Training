@@ -14,6 +14,12 @@ clr.AddReference("NationalInstruments.VeriStand.SystemDefinitionAPI")
 clr.AddReference("NationalInstruments.VeriStand.ClientAPI")
 clr.AddReference("NationalInstruments.VeriStand")
 
+#USING niveristand Python API to run sequence
+from engine_demo_basic import run_engine_demo
+from niveristand import run_py_as_rtseq
+from niveristand.errors import RunError
+from niveristand.legacy import NIVeriStand
+
 from NationalInstruments.VeriStand.ClientAPI import Factory, SystemState
 from NationalInstruments.VeriStand import Error
 
@@ -30,6 +36,23 @@ def StartGateway():
                      output.decode(('UTF-8')).split()[1])
     print(status_output)
     if status_output == "Server running":
+        return True
+    else:
+        exit(1)
+
+def StopGateway():
+    """Stop Veristand silent gateway
+
+    Returns:
+        bool: true if Server is stopped
+    """
+    Veristand_gateway_path = (r"c:\Program Files (x86)\National Instruments" 
+                              r"\VeriStand 2020\veristand-server.exe")
+    output = subprocess.check_output([Veristand_gateway_path,'stop'])
+    status_output = (output.decode(('UTF-8')).split()[0] + " " +
+                     output.decode(('UTF-8')).split()[1])
+    print(status_output)
+    if status_output == "Server stopped":
         return True
     else:
         exit(1)
@@ -52,7 +75,7 @@ class DeploymentHandler:
                              ConnectToSystem(self.system_definition_path,
                                              deploy_system_definition,
                                              timeout))
-        print(self.error_check_.Code)
+        print("Deploy isError", self.error_check_.IsError)
 
 
     def UnDeploy(self):
@@ -82,8 +105,8 @@ class DeploymentHandler:
                                              system_definition_file,
                                              targets))
 
-        print("Status getSystemState, IsError: ", self.error_check_.IsError)
-        print("Status getSystemState,SystemState status: ", enum_system_state)
+        print("SystemState Status, IsError: ", self.error_check_.IsError)
+        print("SystemState Status, SystemState status: ", enum_system_state)
         print("Status getSystemState,SystemDefinitionFile Loaded : ",
                system_definition_file_retured)
         for i in targets_returned:
@@ -91,11 +114,23 @@ class DeploymentHandler:
 
 
 if __name__ == "__main__":
-    # StartGateway()
+    #make sure package is installed
+    #response = subprocess.check_call(['py.exe','-m','pip','install', 'niveristand'])
+    if not subprocess.check_call(['py.exe','-m','pip','install', 'niveristand']):
+        print("already installed")
+    StartGateway()
+    #StopGateway()
     test = DeploymentHandler("C:\\Users\\dsamuels\\Documents\\VeriStand Projects\\Engine Demo 2\\Engine Demo.nivssdf")
     test.PrintSystemStatus()
     test.Deploy()
     test.PrintSystemStatus()
+
+
+    # Uses Python real-time sequences to run a test.
+    run_py_as_rtseq(run_engine_demo)
+    print("Test Success")
+    # time.sleep(15)
+    # StopGateway()
     # test.UnDeploy()
     # test.PrintSystemStatus()
 
