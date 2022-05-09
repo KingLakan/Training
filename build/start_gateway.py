@@ -1,3 +1,5 @@
+import subprocess
+
 def StartGateway():
     """Start Veristand silent gateway
 
