@@ -117,8 +117,8 @@ class DeploymentHandler:
 if __name__ == "__main__":
     #make sure package is installed
     #response = subprocess.check_call(['py.exe','-m','pip','install', 'niveristand'])
-    if not subprocess.check_call(['py.exe','-m','pip','install', 'niveristand']):
-        print("already installed")
+    # if not subprocess.check_call(['py.exe','-m','pip','install', 'niveristand']):
+    #     print("already installed")
     StartGateway()
     #StopGateway()
     test = DeploymentHandler("C:\\Users\\dsamuels\\Documents\\VeriStand Projects\\Engine Demo 2\\Engine Demo.nivssdf")
