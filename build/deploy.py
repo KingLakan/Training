@@ -14,7 +14,6 @@ clr.AddReference("NationalInstruments.VeriStand.SystemDefinitionAPI")
 clr.AddReference("NationalInstruments.VeriStand.ClientAPI")
 clr.AddReference("NationalInstruments.VeriStand")
 
-from NationalInstruments.VeriStand.SystemDefinitionAPI import SystemDefinition, Database, CANPort, XNETDatabases, SignalBasedFrame
 from NationalInstruments.VeriStand.ClientAPI import Factory, SystemState
 from NationalInstruments.VeriStand import Error
 
@@ -35,50 +34,71 @@ def StartGateway():
     else:
         exit(1)
 
-class DeploymentHandler():
-    __init__():
-        self.errorCheck = Error()
+class DeploymentHandler:
 
-def Init():
-    errorCheck = Error()
 
-    #Factory provides access to the NI VeriStand system and the various interfaces available in the Execution API
-    factory = Factory()
+    def __init__(self, system_definition_path: str):
+        self.error_check_ = Error()
+        self.factory_ = Factory()
+        self.factory_workspace_interface_ = (Factory().
+                                             GetIWorkspace2('localhost'))
+        self.system_definition_path = system_definition_path
 
-    #Interface to perform basic workspace operations, such as getting, setting, and logging channel data.
-    factoryWorkspaceInterface = factory.GetIWorkspace2('localhost')
 
-    #SystemDefinition
-    SystemDefinitionFilePath = System.String("C:\\Users\\dsamuels\\Documents\\VeriStand Projects\\Engine Demo 2\\Engine Demo.nivssdf")
-    #SystemDefinitionFilePath = r"C:\Users\dsamuels\Documents\VeriStand Projects\Engine Demo 20\Engine Demo.nivssdf"
-    print(SystemDefinitionFilePath)
+    def Deploy(self):
+        deploy_system_definition = System.Boolean(True)
+        timeout = System.UInt32(500000)
+        self.error_check_ = (self.factory_workspace_interface_.
+                             ConnectToSystem(self.system_definition_path,
+                                             deploy_system_definition,
+                                             timeout))
+        print(self.error_check_.Code)
 
-    deploySystemDefinition = System.Boolean(True)
-    timeout = System.UInt32(500000)
-    #Connects the VeriStand Gateway to one or more targets and deploys the system definition file.
-    errorCheck = factoryWorkspaceInterface.ConnectToSystem(SystemDefinitionFilePath, deploySystemDefinition, timeout)
-    print(errorCheck.Code)
 
-    #Gets the current state of the system to which the VeriStand Gateway is connected.
-    #signalArray = System.Array[System.String](["Sig1","Sig2","Sig3"])
-    systemDefinitionFile = System.String("")
-    targets = System.Array[System.String]([])
-    systemDefinitionFile_retured = System.String("")
-    targets_returned = System.Array[System.String]([])
-    enumSystemState = SystemState.Active
-    enumSystemState1 = SystemState.Idle
+    def UnDeploy(self):
+        password = System.String("")
+        undeploy = System.Boolean(True)
+        self.error_check_ = (self.factory_workspace_interface_.
+                             DisconnectFromSystem("",undeploy))
+        print("Undeploy error: ", self.error_check_.IsError)
 
-    #print(type(SystemState))
-    errorCheck,enumSystemState,systemDefinitionFile_retured,targets_returned = factoryWorkspaceInterface.GetSystemState(enumSystemState, systemDefinitionFile, targets)
-    print("Status getSystemState,error: ", errorCheck)
-    print("Status getSystemState,SystemState status: ", enumSystemState)
-    print("Status getSystemState,SystemDefinitionFile Loaded : ", systemDefinitionFile_retured)
-    for i in targets_returned:
-        print("Status getSystemState,Current-Target: ", i)
+
+    def PrintSystemStatus(self):
+        """Gets the current state of the system to which the 
+           VeriStand Gateway is connected.
+        """
+        system_definition_file = System.String("")
+        targets = System.Array[System.String]([])
+        system_definition_file_retured = System.String("")
+        targets_returned = System.Array[System.String]([])
+        enum_system_state = SystemState.Active
+
+        #print(type(SystemState))
+        (self.error_check_,
+         enum_system_state,
+         system_definition_file_retured,
+         targets_returned) = (self.factory_workspace_interface_.
+                              GetSystemState(enum_system_state,
+                                             system_definition_file,
+                                             targets))
+
+        print("Status getSystemState, IsError: ", self.error_check_.IsError)
+        print("Status getSystemState,SystemState status: ", enum_system_state)
+        print("Status getSystemState,SystemDefinitionFile Loaded : ",
+               system_definition_file_retured)
+        for i in targets_returned:
+            print("Status getSystemState,Current-Target: ", i)
+
 
 if __name__ == "__main__":
-    StartGateway()
-    #Init()
+    # StartGateway()
+    test = DeploymentHandler("C:\\Users\\dsamuels\\Documents\\VeriStand Projects\\Engine Demo 2\\Engine Demo.nivssdf")
+    test.PrintSystemStatus()
+    test.Deploy()
+    test.PrintSystemStatus()
+    # test.UnDeploy()
+    # test.PrintSystemStatus()
+
     # parser = argparse.ArgumentParser(description='SysDef to be processed')
     # parser.add_argument('--file',
     #                     metavar='FILE_PATH',
