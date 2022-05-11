@@ -3,44 +3,111 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+# trigger:
+# - main
+
+# jobs:
+# - job: job0
+#   pool: Windows_Pool
+
+# - job: job1
+#   dependsOn: job0
+#   pool: Windows_Pool
+
+#   steps:
+#   - script: echo "job1"
+#     displayName: 'Run a one-line script'
+
+  
+#   #     runScriptInSeparateScope: true
+#   # - task: PowerShell@2
+#   #   inputs:
+#   #     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+#   #     runScriptInSeparateScope: true
+#   #    ignoreLASTEXITCODE: true
+#   #    runScriptInSeparateScope: false
+#   #    showWarnings: true
+
+# - job: job2
+#   dependsOn: job0
+#   pool: Windows_Pool
+
+#   steps:
+#   - script: echo job2!
+#     displayName: 'Run a one-line script'
+
+#   # - task: PythonScript@0
+#   #   inputs:
+#   #     scriptSource: 'filePath'
+#   #     scriptPath: '$(Build.Repository.LocalPath)/build/deploy.py'
+
+#   - task: PowerShell@2
+#     inputs:
+#       filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+
 trigger:
 - main
 
-jobs:
-- job: job0
-  pool: Windows_Pool
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  isDev: $[eq(variables['Build.SourceBranch'], 'refs/heads/develop')]
 
-- job: job1
-  dependsOn: job0
-  pool: Windows_Pool
+stages:
 
-  steps:
-  - script: echo "job1"
-    displayName: 'Run a one-line script'
+  - stage: Build
+    jobs:
+    - job: Build
 
-  
-  #     runScriptInSeparateScope: true
-  # - task: PowerShell@2
-  #   inputs:
-  #     filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
-  #     runScriptInSeparateScope: true
-  #    ignoreLASTEXITCODE: true
-  #    runScriptInSeparateScope: false
-  #    showWarnings: true
+  - stage: Build_Stage_Prod
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
+    jobs:
+      - job: Build_MIL_GenericTarget
+        pool: Windows_Pool
+    #      vmImage: ubuntu-latest
 
-- job: job2
-  dependsOn: job0
-  pool: Windows_Pool
+        steps:
+        - script: echo Hello, Mathworks!
+        - script: echo $(Build.SourceBranch)
+          displayName: 'Run a one-line script'
 
-  steps:
-  - script: echo job2!
-    displayName: 'Run a one-line script'
+      - job: Build_MIL_VeristandTarget
+        # using Veristand Model Framework
+        pool:
+          vmImage: ubuntu-latest
 
-  # - task: PythonScript@0
-  #   inputs:
-  #     scriptSource: 'filePath'
-  #     scriptPath: '$(Build.Repository.LocalPath)/build/deploy.py'
+        steps:
+        - script: echo Hello, Veristand!
+          displayName: 'Run a one-line script'
 
-  - task: PowerShell@2
-    inputs:
-      filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+      - job: Build_MIL_FPGATarget
+        pool: Windows_Pool
+
+      - job: Build_MIL_EmbededTarget # DUT as target
+        pool: Windows_Pool
+
+      - job: Build_MIL_VeristandProject # DUT as target
+        dependsOn: Build_MIL_VeristandTarget
+        pool: Windows_Pool
+    #      vmImage: ubuntu-latest
+
+  - stage: Build_Stage_Dev
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables.isDev, 'true'))
+    jobs:
+      - job: Mathworks_B
+        pool: Windows_Pool
+
+  - stage: Test_Stage
+    dependsOn: Build_Stage_Prod
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
+    jobs:
+    - job: MIL_TEST
+      pool: Windows_Pool
+      steps:
+      - task: PowerShell@2
+        inputs:
+          filePath: '$(Build.Repository.LocalPath)/build/depoy_veristand_project.ps1'
+
+    - job: HIL_TEST 
+      pool: Windows_Pool
